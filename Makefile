@@ -4,12 +4,8 @@ SRCS=$(wildcard *.c)
 OBJS=$(SRCS:.c=.o)
 HDRS=$(wildcard *.h)
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Darwin)
-	LDFLAGS=-lpthread -ldl -lm
-else
-	LDFLAGS=-lpthread -ldl -lm -static
-endif
+#startup option for gwasrv
+export BROWSER=chrome
 
 all: main.html
 
