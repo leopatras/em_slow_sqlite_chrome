@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <sys/time.h>
 #include <emscripten.h>
 #include "sqlite3.h"
@@ -12,6 +13,7 @@ EM_JS(char*,addPersistentDirsInt,(),{
     console.error("mkdir %o failed:%o",dirname,err);
     return;
   }
+  /* comment the following mount operation and everything runs linear speed */
   try {
     FS.mount(IDBFS, { autoPersist: true }, dirname);
     console.log("did mount IDBFS to "+dirname);
@@ -41,7 +43,7 @@ int main(int argc, char **argv)
     int rc,i,loop;
     struct timeval stop, start;
     addPersistentDirsInt();
-    for (loop = 1; loop <= 20; loop++) {
+    for (loop = 1; loop <= 200; loop++) {
         gettimeofday(&start, NULL);
         remove("/persist/test.db");
         rc = sqlite3_open("/persist/test.db", &db);
@@ -84,6 +86,7 @@ int main(int argc, char **argv)
             sqlite3_close(db);
             return 1;
         }
+        //sleep(1);
     }
     return 0;
 }

@@ -2,3 +2,13 @@
 demonstrates sqlite operations getting slower over time on an IDBFS mount with ASYNCIFY and Chrome browser
 
 remove ASYNCIFY from the Makefile or just don't mount IDBFS and all is fine.
+
+call
+```make```
+to build the executable
+and 
+
+```make emrun```
+
+to run the executable in your standard browser
+(See emrun options to choose another browser)
